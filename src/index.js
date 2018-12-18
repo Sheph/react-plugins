@@ -9,6 +9,7 @@ import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise';
 import reducers from './reducers';
 import App from './containers/App';
+import pluginRegistry from './common/PluginRegistry';
 
 // export stuff for plugins
 
@@ -38,7 +39,13 @@ for (mod in materialUiIcons) {
     window['acore@material-ui/icons/' + mod] = materialUiIcons[mod];
 }
 
+window.acorePluginRegistry = pluginRegistry;
+
 // end export
+
+pluginRegistry.setChangeListener(plugins => {
+    console.log(plugins);
+});
 
 const createStoreWithMiddleware = applyMiddleware(ReduxThunk, ReduxPromise)(createStore);
 const store = createStoreWithMiddleware(reducers);
