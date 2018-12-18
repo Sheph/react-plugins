@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --port 3000 --mode development --open --hot",
+    "start": "webpack-dev-server --port 3000 --mode development --open --hot --progress --colors",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

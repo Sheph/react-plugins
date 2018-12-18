@@ -46,5 +46,8 @@ module.exports = {
       }
     ]
   },
-  plugins: [htmlPlugin]
+  plugins: [htmlPlugin],
+  devServer: {
+    overlay: true
+  }
 };
