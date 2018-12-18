@@ -1,11 +1,11 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: path.resolve('build'),
-    filename: 'core.js'
+    path: path.resolve('../../build/plugins/MyA'),
+    filename: 'plugin.js',
+    libraryTarget : 'window'
   },
   module: {
     rules: [
@@ -35,13 +35,24 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebPackPlugin({
-     template: './src/index.html',
-     filename: './index.html'
-    })
   ],
-  devServer: {
-    contentBase: path.join(__dirname, 'build'),
-    overlay: true
-  }
+  externals: [
+    {
+      'react': 'acoreReact',
+      'react-dom': 'acoreReactDom',
+      'react-redux': 'acoreReactRedux',
+      'react-router-dom': 'acoreReactRouterDom',
+      'redux': 'acoreRedux',
+      'redux-form': 'acoreReduxForm',
+      'redux-promise': 'acoreReduxPromise',
+      'redux-thunk': 'acoreReduxThunk',
+      'axios': 'acoreAxios'
+    },
+    function(context, request, callback) {
+       if (/@material-ui\/*./.test(request)) {
+         return callback(null, 'window acore' + request);
+       }
+       callback();
+    }
+  ]
 };

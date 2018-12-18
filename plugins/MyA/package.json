@@ -1,23 +1,12 @@
 {
-  "name": "react-plugins",
+  "name": "mya",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --port 3000 --mode development --hot --progress --colors",
     "build": "webpack --mode production",
     "build-dev": "webpack --mode development"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Sheph/react-plugins.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Sheph/react-plugins/issues"
-  },
-  "homepage": "https://github.com/Sheph/react-plugins#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
