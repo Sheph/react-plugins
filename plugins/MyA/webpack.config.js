@@ -49,8 +49,11 @@ module.exports = {
       'axios': 'acoreAxios'
     },
     function(context, request, callback) {
-       if (/@material-ui\/*./.test(request)) {
+       if (/@material-ui*./.test(request)) {
          return callback(null, 'window acore' + request);
+       }
+       if (/.\/acore*./.test(request)) {
+         return callback(null, 'window ' + request.substring(2));
        }
        callback();
     }

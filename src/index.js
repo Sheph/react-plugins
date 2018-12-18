@@ -9,7 +9,7 @@ import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise';
 import reducers from './reducers';
 import App from './containers/App';
-import pluginRegistry from './common/PluginRegistry';
+import {pluginRegistry} from './acore';
 
 // export stuff for plugins
 
@@ -21,6 +21,7 @@ import ReduxForm from 'redux-form';
 import Axios from 'axios';
 var materialUiCore = require('@material-ui/core/index.js');
 var materialUiIcons = require('@material-ui/icons/index.js');
+var acore = require('./acore/index.js');
 
 window.acoreReact = React;
 window.acoreReactDom = ReactDom;
@@ -32,19 +33,26 @@ window.acoreReduxPromise = ReduxPromise;
 window.acoreReduxThunk = ReduxThunk;
 window.acoreAxios = Axios;
 var mod;
+window['acore@material-ui/core'] = materialUiCore;
 for (mod in materialUiCore) {
     window['acore@material-ui/core/' + mod] = materialUiCore[mod];
 }
+window['acore@material-ui/icons'] = materialUiIcons;
 for (mod in materialUiIcons) {
     window['acore@material-ui/icons/' + mod] = materialUiIcons[mod];
 }
-
-window.acorePluginRegistry = pluginRegistry;
+window['acore'] = acore;
+for (mod in acore) {
+    window['acore/' + mod] = acore[mod];
+}
 
 // end export
 
 pluginRegistry.setChangeListener(plugins => {
-    console.log(plugins);
+    for (var name in plugins) {
+        console.log(name);
+        plugins[name].test();
+    }
 });
 
 const createStoreWithMiddleware = applyMiddleware(ReduxThunk, ReduxPromise)(createStore);
