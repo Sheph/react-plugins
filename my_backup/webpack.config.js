@@ -42,6 +42,6 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     overlay: true,
-    historyApiFallback: true,
+    historyApiFallback: true
   }
 };

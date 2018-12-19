@@ -11,9 +11,9 @@ class ContentArea extends Component {
         return (
             <Paper className={classes.paper}>
                 <Switch>
-                    <Route extact path="/queues" />
-                    <Route extact path="/borders" />
-                    <Route extact path="/other" />
+                    <Route path="/queues" />
+                    <Route path="/borders" />
+                    <Route path="/other" />
                     <Route exact path="/" render={() => (<Redirect to="/queues"/>)} />
                     <Redirect to="/" />
                 </Switch>

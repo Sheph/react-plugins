@@ -20,6 +20,7 @@ class App extends Component {
             { 'basename' : 'borders', 'caption' : 'Boarders and stuff', 'icon' : 'borders/static/icon.png', 'component' : Grid },
             { 'basename' : 'other', 'caption' : 'Some other stuff long', 'icon' : 'other/static/icon.png', 'component' : Grid },
         ];
+        //plugins = [];
         return(
             <MuiThemeProvider theme={mainTheme}>
                 <div className={classes.wrapper}>

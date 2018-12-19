@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
 //redux imports
 import {createStore, applyMiddleware} from 'redux';
 //react-redux imports
@@ -19,7 +19,7 @@ render(
     <Provider store={store}>
         <Router>
             <Switch>
-                <Route path='/' component={App}/>
+                <App/>
             </Switch>
         </Router>
     </Provider>
