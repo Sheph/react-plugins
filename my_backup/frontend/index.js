@@ -6,13 +6,22 @@ import {createStore, applyMiddleware} from 'redux';
 //react-redux imports
 import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import ReduxPromise from 'redux-promise';
+import { createLogger } from 'redux-logger';
+import { apiMiddleware } from './middleware';
 import reducers from './reducers';
 import App from './containers/App';
 
 import './assets/styles/base.css';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxThunk, ReduxPromise)(createStore);
+const getMiddleware = () => {
+    if (process.env.NODE_ENV === 'production') {
+        return applyMiddleware(ReduxThunk, apiMiddleware);
+    } else {
+        return applyMiddleware(ReduxThunk, apiMiddleware, createLogger());
+    }
+};
+
+const createStoreWithMiddleware = getMiddleware()(createStore);
 const store = createStoreWithMiddleware(reducers);
 
 render(

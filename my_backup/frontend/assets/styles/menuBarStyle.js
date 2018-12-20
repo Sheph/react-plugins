@@ -1,6 +1,5 @@
 import {
-    appMinHeight,
-    boxShadow
+    appMinHeight
 } from './commonStyle.js';
 
 const menuBarStyle = theme => ({
@@ -8,7 +7,6 @@ const menuBarStyle = theme => ({
         padding: theme.spacing.unit * 1,
         height: `calc(100vh - ${theme.spacing.unit * 6}px)`,
         minHeight: `${appMinHeight}px`,
-        ...boxShadow
     },
     list: {
         paddingLeft: '0',

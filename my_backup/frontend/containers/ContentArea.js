@@ -24,7 +24,8 @@ class ContentArea extends Component {
 }
 
 ContentArea.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    plugins: PropTypes.array.isRequired
 };
 
 export default withStyles(contentAreaStyle)(ContentArea);

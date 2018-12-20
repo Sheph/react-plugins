@@ -1,29 +1,23 @@
 import axios from 'axios';
 
-import ROOT_URL from '../acore/action';
+import {ROOT_URL} from '../acore/action';
 
-export const PLUGINS_LIST = 'PLUGINS_LIST';
-export const PLUGINS_LIST_SUCCESS = 'PLUGINS_LIST_SUCCESS';
-export const PLUGINS_LIST_ERROR = 'PLUGINS_LIST_ERROR';
+const CORE_URL = ROOT_URL + '/core';
+
+export const PLUGINS_LISTED = 'PLUGINS_LISTED';
+export const PLUGIN_LOADED = 'PLUGIN_LOADED';
 
 export function pluginsList() {
-    const request = axios.post(`${ROOT_URL}/core/plugins`);
+    const request = axios.post(`${CORE_URL}/plugins`);
     return {
-        type: PLUGINS_LIST,
+        type: PLUGINS_LISTED,
         payload: request
     };
 }
 
-export function pluginsListSuccess(plugins) {
+export function pluginLoaded(plugin) {
     return {
-        type: PLUGINS_LIST_SUCCESS,
-        payload: plugins
-    };
-}
-
-export function pluginsListError(error) {
-    return {
-        type: PLUGINS_LIST_ERROR,
-        payload: error
+        type: PLUGIN_LOADED,
+        payload: plugin
     };
 }
