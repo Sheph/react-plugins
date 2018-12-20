@@ -5,8 +5,8 @@ var webpack = require('webpack')
 module.exports = (env, argv) => ({
   entry: './frontend/index.js',
   output: {
-    path: path.resolve('static'),
-    filename: 'core.js'
+    path: path.resolve('.'),
+    filename: 'static/core.js'
   },
   module: {
     rules: [
@@ -52,7 +52,7 @@ module.exports = (env, argv) => ({
       }
     }),
     new HtmlWebPackPlugin({
-     template: './public/index.html',
+     template: './frontend/index.html',
      filename: './index.html',
      baseurl: argv.mode === 'production' ? '/s/analytics/' : '/'
     })
@@ -63,7 +63,7 @@ module.exports = (env, argv) => ({
     }
   },
   devServer: {
-    contentBase: path.join(__dirname, 'build'),
+    contentBase: path.join(__dirname, ''),
     overlay: true,
     historyApiFallback: true
   }
