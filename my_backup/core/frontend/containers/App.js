@@ -23,10 +23,10 @@ class App extends Component {
                 <div className={classes.wrapper}>
                     <Grid container spacing={24}>
                         <Grid item xs={2} className={classes.menuBarItem}>
-                            <MenuBar plugins={plugin_state.plugins}/>
+                            <MenuBar plugins={plugin_state.listed_plugins}/>
                         </Grid>
                         <Grid item xs>
-                            <ContentArea plugins={plugin_state.plugins}/>
+                            <ContentArea plugins={plugin_state.listed_plugins}/>
                         </Grid>
                     </Grid>
                 </div>
@@ -45,7 +45,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onPluginsList: () => {
             dispatch(pluginsList()).then((action) => {
-                if (action.error || (process.env.NODE_ENV !== 'production')) {
+                if (action.error) {
+                    return;
+                }
+                if ((process.env.NODE_ENV !== 'production') && !process.env.FORCE_PROD_PLUGINS) {
                     return;
                 }
                 for (let plugin of action.payload) {

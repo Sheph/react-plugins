@@ -11,10 +11,9 @@ class PluginRegistry
         return { ...this._plugins };
     }
 
-    register(name, plugin)
+    register(name, component)
     {
-        console.log(name, plugin);
-        this._plugins = { ...this._plugins, [name]: plugin };
+        this._plugins = { ...this._plugins, [name]: component };
         if (this._emitChange) {
             this._emitChange(this.getPlugins());
         }

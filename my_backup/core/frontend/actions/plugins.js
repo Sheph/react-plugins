@@ -5,7 +5,7 @@ import {ROOT_URL} from '../acore/action';
 const CORE_URL = ROOT_URL + '/core';
 
 export const PLUGINS_LISTED = 'PLUGINS_LISTED';
-export const PLUGIN_LOADED = 'PLUGIN_LOADED';
+export const PLUGINS_LOADED = 'PLUGINS_LOADED';
 
 export function pluginsList() {
     const request = axios.post(`${CORE_URL}/plugins`, {}, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
@@ -15,9 +15,9 @@ export function pluginsList() {
     };
 }
 
-export function pluginLoaded(plugin) {
+export function pluginsLoaded(plugins) {
     return {
-        type: PLUGIN_LOADED,
-        payload: plugin
+        type: PLUGINS_LOADED,
+        payload: plugins
     };
 }

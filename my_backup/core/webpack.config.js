@@ -13,7 +13,17 @@ module.exports = (env, argv) => ({
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
+        use: [
+          {
+             loader: 'babel-loader'
+          },
+          {
+             loader: 'eslint-loader',
+             options: {
+               configFile: path.resolve(__dirname, ".eslintrc")
+             }
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -37,7 +47,8 @@ module.exports = (env, argv) => ({
   plugins: [
     new webpack.DefinePlugin({
      'process.env': {
-        'BASE_URL': JSON.stringify(argv.mode === 'production' ? '/s/analytics' : '/')
+        'BASE_URL': JSON.stringify(argv.mode === 'production' ? '/s/analytics' : '/'),
+        'FORCE_PROD_PLUGINS': JSON.stringify(process.env.FORCE_PROD_PLUGINS === undefined ? false : process.env.FORCE_PROD_PLUGINS)
       }
     }),
     new HtmlWebPackPlugin({
@@ -46,6 +57,11 @@ module.exports = (env, argv) => ({
      baseurl: argv.mode === 'production' ? '/s/analytics/' : '/'
     })
   ],
+  resolve: {
+    alias: {
+      acore: path.resolve(__dirname, 'frontend/acore'),
+    }
+  },
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     overlay: true,

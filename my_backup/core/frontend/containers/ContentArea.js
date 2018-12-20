@@ -7,17 +7,26 @@ import contentAreaStyle from '../assets/styles/contentAreaStyle.js';
 
 class ContentArea extends Component {
     render() {
-        const { classes } = this.props;
+        const { classes, plugins } = this.props;
+        let redir;
+        if (plugins.length > 0) {
+            redir = (
+                <React.Fragment>
+                    <Route exact path="/" render={() => (<Redirect to={'/' + plugins[0].basename}/>)} />
+                    <Redirect to={'/' + plugins[0].basename} />
+                </React.Fragment>
+            );
+        }
         return (
             <Paper className={classes.paper}>
                 <Switch>
-                    <Route path="/queues" />
-                    <Route path="/borders" />
-                    <Route path="/other" />
-                    <Route exact path="/" render={() => (<Redirect to="/queues"/>)} />
-                    <Redirect to="/" />
+                    {plugins.map((plugin) => {
+                        return (
+                            <Route path={'/' + plugin.basename} key={plugin.basename} component={plugin.component} />
+                        );
+                    })}
+                    {redir}
                 </Switch>
-                <div>&nbsp;</div>
             </Paper>
         );
     }
