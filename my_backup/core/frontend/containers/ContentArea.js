@@ -21,9 +21,15 @@ class ContentArea extends Component {
             <Paper className={classes.paper}>
                 <Switch>
                     {plugins.map((plugin) => {
-                        return (
-                            <Route path={'/' + plugin.basename} key={plugin.basename} component={plugin.component} />
-                        );
+                        if (plugin.component || (process.env.NODE_ENV === 'production') || process.env.FORCE_PROD_PLUGINS) {
+                            return (
+                                <Route path={'/' + plugin.basename} key={plugin.basename} component={plugin.component} />
+                            );
+                        } else {
+                            return (
+                                <Route path={'/' + plugin.basename} key={plugin.basename} render={() => (<div>run &quot;npm install&quot; for this plugin</div>)} />
+                            );
+                        }
                     })}
                     {redir}
                 </Switch>
