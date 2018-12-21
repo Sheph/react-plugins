@@ -41,6 +41,14 @@ module.exports = (env, argv) => ({
             }
           }
         ]
+      },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: require.resolve('url-loader'),
+        options: {
+          limit: 10000,
+          name: 'static/[name].[hash:8].[ext]',
+        }
       }
     ]
   },

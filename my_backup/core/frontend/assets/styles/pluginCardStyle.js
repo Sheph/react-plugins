@@ -29,7 +29,7 @@ const pluginCardStyle = theme => ({
     itemText: {
         margin: '0',
         lineHeight: '30px',
-        fontSize: '11px',
+        fontSize: '12px',
     },
     selected: {
         backgroundColor: `${theme.palette.primary.light}`,

@@ -4,6 +4,7 @@ module.exports = {
   entry: './frontend/index.js',
   output: {
     path: path.resolve('static'),
+    publicPath : 'queues/static/',
     filename: 'plugin.js',
     libraryTarget : 'window'
   },
@@ -12,7 +13,17 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: [
+          {
+             loader: 'babel-loader'
+          },
+          {
+             loader: 'eslint-loader',
+             options: {
+               configFile: path.resolve(__dirname, ".eslintrc")
+             }
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -30,6 +41,14 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: require.resolve('url-loader'),
+        options: {
+          limit: 10000,
+          name: '[name].[hash:8].[ext]',
+        }
       }
     ]
   },
@@ -49,7 +68,10 @@ module.exports = {
       'axios': 'acoreAxios'
     },
     function(context, request, callback) {
-       if (/@material-ui*./.test(request)) {
+       if (/@material-ui/.test(request)) {
+         return callback(null, 'window acore' + request);
+       }
+       if (/@material-ui\/core*./.test(request)) {
          return callback(null, 'window acore' + request);
        }
        if (/acore*./.test(request)) {

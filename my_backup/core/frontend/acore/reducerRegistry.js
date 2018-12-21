@@ -13,7 +13,7 @@ class ReducerRegistry
 
     register(name, reducer)
     {
-        this._reducer = { ...this._reducer, [name]: reducer };
+        this._reducers = { ...this._reducers, [name]: reducer };
         if (this._emitChange) {
             this._emitChange(this.getReducers());
         }
