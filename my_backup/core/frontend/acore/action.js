@@ -8,5 +8,10 @@ export const ASYNC_END = 'ASYNC_END';
 export function postRequest(url, data)
 {
     // x-www-form-urlencoded is needed here in order to bypass "OPTIONS" request
-    return axios.post(`${ROOT_URL}${url}`, {}, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    return axios.post(`${ROOT_URL}${url}`, data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+}
+
+export function getRequest(url)
+{
+    return axios.get(`${ROOT_URL}${url}`);
 }

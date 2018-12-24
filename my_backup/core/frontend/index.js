@@ -11,6 +11,9 @@ import App from './containers/App';
 import {pluginsLoaded} from './actions/plugins';
 import {pluginRegistry, reducerRegistry} from './acore';
 import {setStore} from './acore/store';
+import {getRequest} from './acore/action';
+import {setTrs} from './acore/translation';
+import {tr} from './translation';
 
 import './assets/styles/base.css';
 
@@ -44,7 +47,13 @@ if ((process.env.NODE_ENV !== 'production') && !process.env.FORCE_PROD_PLUGINS) 
     require('./devPlugins_generated');
 }
 
-render(
+getRequest('/core/translation.json', {}).then((result) => {
+    setTrs(result.data);
+}).catch((res) => {
+    console.error('Unable to fetch translations');
+}).finally(() => {
+    document.title = tr('Analytical module');
+    render(
     <Provider store={store}>
         <Router basename={process.env.BASE_URL}>
             <Switch>
@@ -53,3 +62,4 @@ render(
         </Router>
     </Provider>
     , document.getElementById('root'));
+});

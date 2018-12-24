@@ -10,6 +10,7 @@ import ZoneCard from 'acore/containers/ZoneCard';
 import StackedBarChart from 'acore/containers/StackedBarChart';
 import {peopleZoneImages, peopleCountLabels, peopleCountColors} from 'acore/assets';
 import {zonesList, reportUpdate, reportReset} from '../actions/queues';
+import {tr} from '../translation';
 
 class Main extends Component {
     constructor(props) {
@@ -44,26 +45,22 @@ class Main extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.location !== this.props.location) {
+            if (this.reportTimeout) {
+                clearTimeout(this.reportTimeout);
+                this.reportTimeout = null;
+            }
             if (this.props.location.search.length > 0) {
                 this.props.onReportUpdate(this.props.location.search);
             } else {
                 this.props.onReportReset();
             }
-        }
-
-        if (prevProps.queuesState.reports !== this.props.queuesState.reports) {
+        } else if (prevProps.queuesState.reports !== this.props.queuesState.reports) {
             if (this.props.location.search.length > 0) {
-                if (this.reportTimeout) {
-                    clearTimeout(this.reportTimeout);
-                }
-                this.reportTimeout = setTimeout(function() {
-                    this.reportTimeout = null;
-                    this.props.onReportUpdate(this.props.location.search);
-                }.bind(this), 60000);
-            } else {
-                if (this.reportTimeout) {
-                    clearTimeout(this.reportTimeout);
-                    this.reportTimeout = null;
+                if (!this.reportTimeout) {
+                    this.reportTimeout = setTimeout(function() {
+                        this.reportTimeout = null;
+                        this.props.onReportUpdate(this.props.location.search);
+                    }.bind(this), 60000);
                 }
             }
         }
@@ -142,7 +139,7 @@ class Main extends Component {
                     })}
                 </Grid>
                 <br/>
-                <Button variant="contained" disabled={Object.keys(this.state.checkedZones).length === 0} component={Link} to={reportLink}>Build report</Button>
+                <Button variant="contained" disabled={Object.keys(this.state.checkedZones).length === 0} component={Link} to={reportLink}>{tr('Build report')}</Button>
                 <br/>
                 <br/>
                 {queuesState.reports.map((report) => {

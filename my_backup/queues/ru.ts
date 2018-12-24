@@ -35,5 +35,9 @@
         <source>Analytics: the &apos;%s&apos; line currently has %s people in it</source>
         <translation>Аналитика: в очереди &apos;%s&apos; сейчас %s человек</translation>
     </message>
+    <message>
+        <source>Build report</source>
+        <translation>Построить отчёт</translation>
+    </message>
 </context>
 </TS>
