@@ -7,7 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import mainStyle from '../assets/styles/mainStyle.js';
 import ZoneCard from 'acore/containers/ZoneCard';
-import {peopleZoneImages} from 'acore/assets';
+import StackedBarChart from 'acore/containers/StackedBarChart';
+import {peopleZoneImages, peopleCountLabels, peopleCountColors} from 'acore/assets';
 import {zonesList, reportUpdate, reportReset} from '../actions/queues';
 
 class Main extends Component {
@@ -19,9 +20,11 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        this.timeout = null;
+        this.zonesTimeout = null;
+        this.reportTimeout = null;
         this.props.onZonesList();
         if (this.props.location.search.length > 0) {
+            this.props.onReportReset();
             this.props.onReportUpdate(this.props.location.search);
         } else {
             this.props.onReportReset();
@@ -29,9 +32,13 @@ class Main extends Component {
     }
 
     componentWillUnmount() {
-        if (this.timeout) {
-            clearTimeout(this.timeout);
-            this.timeout = null;
+        if (this.zonesTimeout) {
+            clearTimeout(this.zonesTimeout);
+            this.zonesTimeout = null;
+        }
+        if (this.reportTimeout) {
+            clearTimeout(this.reportTimeout);
+            this.reportTimeout = null;
         }
     }
 
@@ -43,10 +50,28 @@ class Main extends Component {
                 this.props.onReportReset();
             }
         }
+
+        if (prevProps.queuesState.reports !== this.props.queuesState.reports) {
+            if (this.props.location.search.length > 0) {
+                if (this.reportTimeout) {
+                    clearTimeout(this.reportTimeout);
+                }
+                this.reportTimeout = setTimeout(function() {
+                    this.reportTimeout = null;
+                    this.props.onReportUpdate(this.props.location.search);
+                }.bind(this), 60000);
+            } else {
+                if (this.reportTimeout) {
+                    clearTimeout(this.reportTimeout);
+                    this.reportTimeout = null;
+                }
+            }
+        }
+
         if (prevProps.queuesState.zones !== this.props.queuesState.zones) {
-            if (!this.timeout) {
-                this.timeout = setTimeout(function() {
-                    this.timeout = null;
+            if (!this.zonesTimeout) {
+                this.zonesTimeout = setTimeout(function() {
+                    this.zonesTimeout = null;
                     this.props.onZonesList();
                 }.bind(this), 10000);
             }
@@ -81,7 +106,15 @@ class Main extends Component {
 
     render() {
         const { classes, queuesState } = this.props;
-        let reportLink = 'queues?mode=halfhour&objects=' + Object.keys(this.state.checkedZones).join(',');
+
+        let guids = [];
+        for (let guid in queuesState.zones) {
+            if (guid in this.state.checkedZones) {
+                guids.push(guid);
+            }
+        }
+
+        let reportLink = 'queues?mode=halfhour&objects=' + guids.join(',');
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
@@ -103,14 +136,25 @@ class Main extends Component {
                                 <ZoneCard
                                     zoneImage={peopleZoneImages[Math.min(zone.count, 5)]}
                                     zoneText={zone.name}
-                                    onChange={(evt) => this.handleZoneToggle(guid, evt.target.checked)}
-                                    data-id={guid} />
+                                    onChange={(evt) => this.handleZoneToggle(guid, evt.target.checked)} />
                             </Grid>
                         );
                     })}
                 </Grid>
                 <br/>
                 <Button variant="contained" disabled={Object.keys(this.state.checkedZones).length === 0} component={Link} to={reportLink}>Build report</Button>
+                <br/>
+                <br/>
+                {queuesState.reports.map((report) => {
+                    return (
+                        <React.Fragment key={report[0]}>
+                            <StackedBarChart data={report[3]}
+                                title={report[1]}
+                                labels={peopleCountLabels}
+                                colors={peopleCountColors} />
+                        </React.Fragment>
+                    );
+                })}
             </React.Fragment>
         );
     }

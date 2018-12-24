@@ -1,10 +1,13 @@
 import {
     QUEUES_ZONES_LISTED,
+    QUEUES_REPORT_RESET,
+    QUEUES_REPORT_UPDATED
 } from '../actions/queues';
 
 const intialState =
 {
-    zones: {}
+    zones: {},
+    reports: []
 };
 
 export default function(state = intialState, action)
@@ -21,6 +24,16 @@ export default function(state = intialState, action)
         }
 
         return {...state, zones: newZones };
+    }
+    case QUEUES_REPORT_RESET: {
+        return {...state, reports: [] };
+    }
+    case QUEUES_REPORT_UPDATED: {
+        if (action.error) {
+            return {...state, reports: [] };
+        }
+
+        return {...state, reports: action.payload.data };
     }
     default:
         return state;

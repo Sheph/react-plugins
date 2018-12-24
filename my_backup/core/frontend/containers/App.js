@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import {MuiThemeProvider} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import MenuBar from './MenuBar';
 import ContentArea from './ContentArea';
 import appStyle from '../assets/styles/appStyle';
@@ -20,12 +21,13 @@ class App extends Component {
         const { classes, pluginState } = this.props;
         return(
             <MuiThemeProvider theme={mainTheme}>
+                <CssBaseline />
                 <div className={classes.wrapper}>
-                    <Grid container spacing={24}>
+                    <Grid container spacing={24} wrap='nowrap'>
                         <Grid item xs={2} className={classes.menuBarItem}>
                             <MenuBar plugins={pluginState.listed_plugins}/>
                         </Grid>
-                        <Grid item xs>
+                        <Grid item xs zeroMinWidth>
                             <ContentArea plugins={pluginState.listed_plugins}/>
                         </Grid>
                     </Grid>

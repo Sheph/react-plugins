@@ -10,6 +10,9 @@ const mainTheme = createMuiTheme({
     palette: {
         primary: blue,
         secondary: green,
+        background: {
+            default: '#EEEEEE'
+        }
     },
     typography: {
         useNextVariants: true,

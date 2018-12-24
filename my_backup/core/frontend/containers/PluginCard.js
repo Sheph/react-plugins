@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
+import Typography from '@material-ui/core/Typography';
 import { NavLink } from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import pluginCardStyle from '../assets/styles/pluginCardStyle.js';
+import {ROOT_URL} from '../acore/action';
 
 class PluginCard extends Component {
     activeRoute(routeName)
@@ -23,12 +24,12 @@ class PluginCard extends Component {
         }
         return (
             <NavLink to={'/' + plugin.basename} className={classes.item}>
-                <ListItem button className={itemLinkClasses.join(' ')}>
+                <ListItem button className={itemLinkClasses.join(' ')} >
                     <ListItemIcon className={classes.itemIcon}>
-                        <Icon>add_circle</Icon>
+                        <img src={ROOT_URL + '/' + plugin.icon} alt='' />
                     </ListItemIcon>
                     <ListItemText
-                        primary={plugin.caption}
+                        primary={<Typography variant="caption">{plugin.caption}</Typography>}
                         className={classes.itemText}
                         disableTypography />
                 </ListItem>

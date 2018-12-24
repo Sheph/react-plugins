@@ -1,35 +1,19 @@
 const pluginCardStyle = theme => ({
     item: {
-        position: 'relative',
-        display: 'block',
         textDecoration: 'none',
         '&:hover,&:focus,&:visited,&': {
             color: `${theme.palette.text.primary}`
         }
     },
     itemLink: {
-        width: 'auto',
+        backgroundColor: `${theme.palette.action.selected}`,
         transition: 'all 300ms linear',
         borderRadius: '5px',
-        position: 'relative',
-        display: 'block',
-        padding: '10px 15px',
-        backgroundColor: 'transparent',
     },
     itemIcon: {
-        width: '24px',
-        height: '30px',
-        fontSize: '24px',
-        lineHeight: '30px',
-        float: 'left',
-        marginRight: '15px',
-        textAlign: 'center',
-        verticalAlign: 'middle',
     },
     itemText: {
-        margin: '0',
-        lineHeight: '30px',
-        fontSize: '12px',
+        margin: '-25px',
     },
     selected: {
         backgroundColor: `${theme.palette.primary.light}`,

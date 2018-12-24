@@ -3,13 +3,6 @@
     border-style: solid;
 }*/
 
-html * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
 body {
-    background-color: #EEEEEE;
-    margin: 0;
     font-family: Roboto, Helvetica, Arial, sans-serif;
 }
